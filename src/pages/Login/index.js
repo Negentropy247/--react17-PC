@@ -2,11 +2,16 @@ import React from 'react'
 import { Card, Button, Checkbox, Form, Input } from 'antd'
 import logo from '@/assets/logo.png'
 import './index.scss'
+import { useDispatch } from 'react-redux'
+import { login } from '@/store/actions/login'
 
 export default function Login() {
   // 当表单校验通过，就执行onFinish，并会携带数据
+  const dispatch = useDispatch()
   const onFinish = values => {
     console.log('Success:', values)
+    // 发送请求进行登录
+    dispatch(login(values))
   }
   return (
     <div className="login">
