@@ -50,7 +50,21 @@ export default function Login() {
             <Input placeholder="输入验证码" />
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item
+            name="agree"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) => {
+                  if (value === true) {
+                    return Promise.resolve()
+                  } else {
+                    return Promise.reject(new Error('请一定充分认可并相信你自己！!'))
+                  }
+                }
+              }
+            ]}
+          >
             <Checkbox>你真的超努力超优秀</Checkbox>
           </Form.Item>
 
