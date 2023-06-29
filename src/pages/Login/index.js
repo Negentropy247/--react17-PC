@@ -4,6 +4,10 @@ import logo from '@/assets/logo.png'
 import './index.scss'
 
 export default function Login() {
+  // 当表单校验通过，就执行onFinish，并会携带数据
+  const onFinish = values => {
+    console.log('Success:', values)
+  }
   return (
     <div className="login">
       <Card className="login-container">
@@ -12,11 +16,16 @@ export default function Login() {
 
         {/* 表单渲染 */}
         <Form
-          // onFinish={onFinish}
-          // onFinishFailed={onFinishFailed}
+          onFinish={onFinish}
+          // onFinishFailed={onFinishFailed} 检验不通过不需要做什么
           autoComplete="off"
           size="large"
           validateTrigger={['onChange', 'onBlur']}
+          initialValues={{
+            mobile: '13911111111',
+            code: '246810'
+            // agree: false
+          }}
         >
           <Form.Item
             name="mobile"
