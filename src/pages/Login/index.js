@@ -1,10 +1,14 @@
 import React from 'react'
-import { Button } from 'antd'
+import { Card } from 'antd'
+import logo from '@/assets/logo.png'
+import './index.scss'
 
 export default function Login() {
   return (
-    <div>
-      <Button type="primary">按钮</Button>
+    <div className="login">
+      <Card className="login-container">
+        <img className="login-logo" src={logo} alt="" />
+      </Card>
     </div>
   )
 }
