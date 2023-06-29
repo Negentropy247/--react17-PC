@@ -16,12 +16,37 @@ export default function Login() {
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
           size="large"
+          validateTrigger={['onChange', 'onBlur']}
         >
-          <Form.Item>
+          <Form.Item
+            name="mobile"
+            rules={[
+              {
+                required: 'true',
+                message: '手机号不能为空'
+              },
+              {
+                pattern: /^1[3-9]\d{9}$/,
+                message: '手机号格式错误'
+              }
+            ]}
+          >
             <Input placeholder="输入手机号" />
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item
+            name="code"
+            rules={[
+              {
+                required: 'true',
+                message: '验证码不能为空'
+              },
+              {
+                pattern: /^\d{6}$/,
+                message: '验证码格式错误'
+              }
+            ]}
+          >
             <Input placeholder="输入验证码" />
           </Form.Item>
 
