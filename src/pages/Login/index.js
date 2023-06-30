@@ -1,17 +1,26 @@
 import React from 'react'
-import { Card, Button, Checkbox, Form, Input } from 'antd'
+import { Card, Button, Checkbox, Form, Input, message } from 'antd'
 import logo from '@/assets/logo.png'
 import './index.scss'
 import { useDispatch } from 'react-redux'
 import { login } from '@/store/actions/login'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 
 export default function Login() {
   // 当表单校验通过，就执行onFinish，并会携带数据
   const dispatch = useDispatch()
-  const onFinish = values => {
-    console.log('Success:', values)
+  const history = useHistory()
+  const onFinish = async values => {
+    // console.log('Success:', values)
     // 发送请求进行登录
-    dispatch(login(values))
+    try {
+      await dispatch(login(values))
+      message.success('登录成功')
+      history.push('/home')
+    } catch (error) {
+      // console.log(error)
+      message.error(error.response.data.message)
+    }
   }
   return (
     <div className="login">
