@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Card, Button, Checkbox, Form, Input, message } from 'antd'
 import logo from '@/assets/logo.png'
-import './index.scss'
+import styles from './index.module.scss'
 import { useDispatch } from 'react-redux'
 import { login } from '@/store/actions/login'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
@@ -30,7 +30,7 @@ export default function Login() {
     }
   }
   return (
-    <div className="login">
+    <div className={styles.root}>
       <Card className="login-container">
         {/* 图片渲染 */}
         <img className="login-logo" src={logo} alt="" />
