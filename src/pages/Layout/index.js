@@ -1,16 +1,13 @@
 import React from 'react'
 import styles from './index.module.scss'
 import { Breadcrumb, Layout, Menu } from 'antd'
-import {
-  NotificationOutlined,
-  UserOutlined,
-  LogoutOutlined,
-  HomeOutlined,
-  HddOutlined,
-  EditOutlined
-} from '@ant-design/icons'
+import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
+import { Route, Link, Switch } from 'react-router-dom'
+import Home from '../Home'
+import Article from '../Article'
+import Publish from '../Publish'
 
-const { Header, Content, Sider } = Layout
+const { Header, Sider } = Layout
 
 export default function MyLayout() {
   return (
@@ -36,27 +33,22 @@ export default function MyLayout() {
               style={{ height: '100%', borderRight: 0 }}
             >
               <Menu.Item icon={<HomeOutlined />} key="1">
-                数据概览
+                <Link to="/home">数据概览</Link>
               </Menu.Item>
               <Menu.Item icon={<HddOutlined />} key="2">
-                内容管理
+                <Link to="/home/article">内容管理</Link>
               </Menu.Item>
               <Menu.Item icon={<EditOutlined />} key="3">
-                发布文章
+                <Link to="/home/publish">发布文章</Link>
               </Menu.Item>
             </Menu>
           </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <Content
-              className="site-layout-background"
-              style={{
-                padding: 24,
-                margin: 0,
-                minHeight: 280
-              }}
-            >
-              Content
-            </Content>
+          <Layout style={{ padding: ' 24px ' }}>
+            <Switch>
+              <Route exact path="/home" component={Home}></Route>
+              <Route path="/home/article" component={Article}></Route>
+              <Route path="/home/publish" component={Publish}></Route>
+            </Switch>
           </Layout>
         </Layout>
       </Layout>
