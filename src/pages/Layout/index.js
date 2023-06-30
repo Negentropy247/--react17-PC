@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './index.module.scss'
 import { Breadcrumb, Layout, Menu } from 'antd'
 import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
-import { Route, Link, Switch } from 'react-router-dom'
+import { Route, Link, Switch, useLocation } from 'react-router-dom'
 import Home from '../Home'
 import Article from '../Article'
 import Publish from '../Publish'
@@ -10,6 +10,7 @@ import Publish from '../Publish'
 const { Header, Sider } = Layout
 
 export default function MyLayout() {
+  const location = useLocation()
   return (
     <div className={styles.root}>
       <Layout>
@@ -29,16 +30,16 @@ export default function MyLayout() {
             <Menu
               mode="inline"
               theme="dark"
-              defaultSelectedKeys={['1']}
+              selectedKeys={[location.pathname]}
               style={{ height: '100%', borderRight: 0 }}
             >
-              <Menu.Item icon={<HomeOutlined />} key="1">
+              <Menu.Item icon={<HomeOutlined />} key="/home">
                 <Link to="/home">数据概览</Link>
               </Menu.Item>
-              <Menu.Item icon={<HddOutlined />} key="2">
+              <Menu.Item icon={<HddOutlined />} key="/home/article">
                 <Link to="/home/article">内容管理</Link>
               </Menu.Item>
-              <Menu.Item icon={<EditOutlined />} key="3">
+              <Menu.Item icon={<EditOutlined />} key="/home/publish">
                 <Link to="/home/publish">发布文章</Link>
               </Menu.Item>
             </Menu>
