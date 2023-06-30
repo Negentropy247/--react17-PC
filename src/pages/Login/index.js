@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Button, Checkbox, Form, Input, message } from 'antd'
 import logo from '@/assets/logo.png'
 import './index.scss'
@@ -10,16 +10,23 @@ export default function Login() {
   // 当表单校验通过，就执行onFinish，并会携带数据
   const dispatch = useDispatch()
   const history = useHistory()
+
+  const [loading, setLoading] = useState(false)
+
   const onFinish = async values => {
+    setLoading(true)
     // console.log('Success:', values)
     // 发送请求进行登录
     try {
       await dispatch(login(values))
-      message.success('登录成功')
-      history.push('/home')
+      message.success('登录成功', 1, () => {
+        history.push('/home')
+      })
     } catch (error) {
       // console.log(error)
-      message.error(error.response.data.message)
+      message.error(error.response.data.message, 1, () => {
+        setLoading(false)
+      })
     }
   }
   return (
@@ -92,7 +99,7 @@ export default function Login() {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" block loading={loading}>
               进入年薪25w星球
             </Button>
           </Form.Item>
