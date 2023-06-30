@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './index.module.scss'
 import { Breadcrumb, Layout, Menu } from 'antd'
 import { LogoutOutlined, HomeOutlined, HddOutlined, EditOutlined } from '@ant-design/icons'
@@ -6,11 +6,17 @@ import { Route, Link, Switch, useLocation } from 'react-router-dom'
 import Home from '../Home'
 import Article from '../Article'
 import Publish from '../Publish'
+import { useDispatch } from 'react-redux'
+import { getUserInfo } from '@/store/actions/user'
 
 const { Header, Sider } = Layout
 
 export default function MyLayout() {
   const location = useLocation()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getUserInfo())
+  }, [])
   return (
     <div className={styles.root}>
       <Layout>

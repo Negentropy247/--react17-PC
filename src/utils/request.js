@@ -1,5 +1,6 @@
 // 封装axios
 import axios from 'axios'
+import { getToken } from './storage'
 
 const instance = axios.create({
   baseURL: 'http://geek.itheima.net/v1_0/',
@@ -11,6 +12,11 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
+    const token = getToken()
+    if (token) {
+      // 添加token
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   function (error) {
