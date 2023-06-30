@@ -7,7 +7,7 @@ import NotFound from './pages/NotFound'
 export default function App() {
   return (
     <Router>
-      <div>
+      <div className="app">
         {/* 渲染组件 */}
         <Switch>
           {/* 路由重定向 */}

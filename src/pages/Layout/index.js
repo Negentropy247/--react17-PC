@@ -10,7 +10,6 @@ import {
   EditOutlined
 } from '@ant-design/icons'
 
-const { SubMenu } = Menu
 const { Header, Content, Sider } = Layout
 
 export default function MyLayout() {
@@ -32,13 +31,19 @@ export default function MyLayout() {
           <Sider width={200} className="site-layout-background">
             <Menu
               mode="inline"
+              theme="dark"
               defaultSelectedKeys={['1']}
-              defaultOpenKeys={['sub1']}
               style={{ height: '100%', borderRight: 0 }}
             >
-              <Menu.Item key="1">option1</Menu.Item>
-              <Menu.Item key="2">option2</Menu.Item>
-              <Menu.Item key="3">option3</Menu.Item>
+              <Menu.Item icon={<HomeOutlined />} key="1">
+                数据概览
+              </Menu.Item>
+              <Menu.Item icon={<HddOutlined />} key="2">
+                内容管理
+              </Menu.Item>
+              <Menu.Item icon={<EditOutlined />} key="3">
+                发布文章
+              </Menu.Item>
             </Menu>
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>

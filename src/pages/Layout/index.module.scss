@@ -1,4 +1,5 @@
 .root {
+  height: 100%;
   :global {
     .ant-layout-header {
       padding: 0;
@@ -23,6 +24,9 @@
           cursor: pointer;
         }
       }
+    }
+    .ant-layout {
+      height: 100%;
     }
   }
 }
