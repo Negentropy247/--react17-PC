@@ -1,6 +1,10 @@
 // 封装axios
 import axios from 'axios'
 import { getToken } from './storage'
+import { message } from 'antd'
+import store from '@/store'
+import { logout } from '@/store/actions/login'
+import history from '@/utils/history'
 
 const instance = axios.create({
   baseURL: 'http://geek.itheima.net/v1_0/',
@@ -32,6 +36,18 @@ instance.interceptors.response.use(
     return response
   },
   function (error) {
+    if (!error.response) {
+      message.error('没网啦~但你还是很优秀！')
+      return Promise.reject(error)
+    }
+    if (error.response.status === 401) {
+      // token过期
+      message.error('上一次认可自己已经过期，再次继续认可自己吧！你太棒了！')
+      // 清除token
+      store.dispatch(logout())
+      // 跳转到登录页
+      history.push('/login')
+    }
     // 对响应错误做点什么
     return Promise.reject(error)
   }
