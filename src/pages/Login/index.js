@@ -4,13 +4,14 @@ import logo from '@/assets/logo.png'
 import styles from './index.module.scss'
 import { useDispatch } from 'react-redux'
 import { login } from '@/store/actions/login'
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
+import { useHistory, useLocation } from 'react-router-dom'
 
-export default function Login() {
+export default function Login(props) {
+  console.log(props)
   // 当表单校验通过，就执行onFinish，并会携带数据
   const dispatch = useDispatch()
   const history = useHistory()
-
+  const location = useLocation()
   const [loading, setLoading] = useState(false)
 
   const onFinish = async values => {
@@ -20,7 +21,9 @@ export default function Login() {
     try {
       await dispatch(login(values))
       message.success('登录成功', 1, () => {
-        history.push('/home')
+        // console.log(location.state)
+        const from = location.state ? location.state.from : '/home'
+        history.replace(from)
       })
     } catch (error) {
       // console.log(error)
