@@ -1,6 +1,6 @@
 import request from '@/utils/request'
-import { LOGIN } from '@/store/constants'
-import { setToken } from '@/utils/storage'
+import { LOGIN, LOGOUT } from '@/store/constants'
+import { setToken, removeToken } from '@/utils/storage'
 export const login = payload => {
   return async dispatch => {
     const res = await request({
@@ -15,6 +15,15 @@ export const login = payload => {
     dispatch({
       type: LOGIN,
       payload: token
+    })
+  }
+}
+
+export const logout = () => {
+  return dispatch => {
+    removeToken()
+    dispatch({
+      type: LOGOUT
     })
   }
 }
