@@ -15,7 +15,9 @@ export default function App() {
           {/* 路由重定向 */}
           <Redirect exact from="/" to="/home"></Redirect>
           <Route path="/login" component={Login}></Route>
-          <PrivateRoute path="/home" component={Layout}></PrivateRoute>
+          <PrivateRoute path="/home">
+            <Layout></Layout>
+          </PrivateRoute>
           <Route component={NotFound}></Route>
         </Switch>
       </div>
