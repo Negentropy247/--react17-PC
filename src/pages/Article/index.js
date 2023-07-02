@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
-import { Breadcrumb, Button, Card, DatePicker, Form, Radio, Select, Table, Tag } from 'antd'
+import { Breadcrumb, Button, Card, DatePicker, Form, Image, Radio, Select, Table, Tag } from 'antd'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getArticleList, getChannelList } from '@/store/actions/article'
+import img from '@/assets/error.png'
 
 const STATUS = [
   { id: -1, title: '全部', color: 'magenta' },
@@ -16,7 +17,15 @@ const STATUS = [
 const columns = [
   {
     title: '封面',
-    dataIndex: 'name'
+    dataIndex: 'cover',
+    render(cover) {
+      // console.log(cover.images)
+      if (cover.type === 0) {
+        return <Image width={200} height={150} src={img}></Image>
+      } else {
+        return <Image width={200} height={150} src={cover.images[0]} fallback={img}></Image>
+      }
+    }
   },
   {
     title: '标题',
