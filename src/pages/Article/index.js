@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './index.module.scss'
 import { Breadcrumb, Button, Card, DatePicker, Form, Radio, Select } from 'antd'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getChannelList } from '@/store/actions/article'
 
 export default function Article() {
+  const dispatch = useDispatch()
+  const channels = useSelector(state => state.article.channels)
+  useEffect(() => {
+    dispatch(getChannelList())
+  }, [])
   return (
     <div className={styles.root}>
       <Card
@@ -28,13 +35,12 @@ export default function Article() {
             </Radio.Group>
           </Form.Item>
           <Form.Item label="频道" name="channel_id">
-            <Select
-              style={{
-                width: 120
-              }}
-              placeholder="请选择频道"
-            >
-              <Select.Option value="1">111</Select.Option>
+            <Select style={{ width: 120 }} placeholder="请选择频道">
+              {channels.map(item => (
+                <Select.Option value={item.id} key={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
           <Form.Item label="日期 ">
