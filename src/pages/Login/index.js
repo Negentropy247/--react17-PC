@@ -21,7 +21,7 @@ export default function Login(props) {
     try {
       await dispatch(login(values))
       message.success('登录成功', 1, () => {
-        // console.log(location.state)
+        console.log(location.state)
         const from = location.state ? location.state.from : '/home'
         history.replace(from)
       })

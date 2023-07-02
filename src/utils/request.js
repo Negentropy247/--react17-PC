@@ -37,6 +37,7 @@ instance.interceptors.response.use(
   },
   function (error) {
     if (!error.response) {
+      // console.log(history)
       message.error('没网啦~但你还是很优秀！')
       return Promise.reject(error)
     }
@@ -46,7 +47,12 @@ instance.interceptors.response.use(
       // 清除token
       store.dispatch(logout())
       // 跳转到登录页
-      history.push('/login')
+      history.replace({
+        pathname: '/login',
+        state: {
+          from: history.location.pathname
+        }
+      })
     }
     // 对响应错误做点什么
     return Promise.reject(error)
