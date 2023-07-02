@@ -11,6 +11,11 @@ export default function Article() {
   useEffect(() => {
     dispatch(getChannelList())
   }, [])
+
+  const onFinish = values => {
+    console.log(values)
+  }
+
   return (
     <div className={styles.root}>
       <Card
@@ -24,7 +29,7 @@ export default function Article() {
         }
       >
         {/* 表单 */}
-        <Form initialValues={{ status: -1 }}>
+        <Form initialValues={{ status: -1 }} onFinish={onFinish}>
           <Form.Item label="状态" name="status">
             <Radio.Group>
               <Radio value={-1}>全部</Radio>
@@ -43,11 +48,13 @@ export default function Article() {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item label="日期 ">
+          <Form.Item label="日期" name="date">
             <DatePicker.RangePicker></DatePicker.RangePicker>
           </Form.Item>
           <Form.Item>
-            <Button type="primary">筛选</Button>
+            <Button type="primary" htmlType="submit">
+              筛选
+            </Button>
           </Form.Item>
         </Form>
         {/* 表格 */}
