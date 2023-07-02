@@ -1,9 +1,59 @@
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
-import { Breadcrumb, Button, Card, DatePicker, Form, Radio, Select } from 'antd'
+import { Breadcrumb, Button, Card, DatePicker, Form, Radio, Select, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getChannelList } from '@/store/actions/article'
+
+const dataSource = [
+  {
+    key: '1',
+    name: '胡彦斌',
+    age: 32,
+    address: '西湖区湖底公园1号'
+  },
+  {
+    key: '2',
+    name: '胡彦祖',
+    age: 42,
+    address: '西湖区湖底公园1号'
+  }
+]
+
+const columns = [
+  {
+    title: '封面',
+    key: 'name'
+  },
+  {
+    title: '标题',
+    key: 'age'
+  },
+  {
+    title: '状态',
+    key: 'address'
+  },
+  {
+    title: '时间',
+    key: 'address'
+  },
+  {
+    title: '阅读数',
+    key: 'address'
+  },
+  {
+    title: '评论数',
+    key: 'address'
+  },
+  {
+    title: '点赞数',
+    key: 'address'
+  },
+  {
+    title: '操作',
+    key: 'address'
+  }
+]
 
 export default function Article() {
   const dispatch = useDispatch()
@@ -57,7 +107,10 @@ export default function Article() {
             </Button>
           </Form.Item>
         </Form>
-        {/* 表格 */}
+      </Card>
+      {/* 表格 */}
+      <Card title="根据筛选结果共查询到000条数据" style={{ marginTop: 10 }}>
+        <Table dataSource={dataSource} columns={columns} />;
       </Card>
     </div>
   )
