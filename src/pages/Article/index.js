@@ -3,7 +3,7 @@ import styles from './index.module.scss'
 import { Breadcrumb, Button, Card, DatePicker, Form, Radio, Select, Table } from 'antd'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getChannelList } from '@/store/actions/article'
+import { getArticleList, getChannelList } from '@/store/actions/article'
 
 const dataSource = [
   {
@@ -60,6 +60,7 @@ export default function Article() {
   const channels = useSelector(state => state.article.channels)
   useEffect(() => {
     dispatch(getChannelList())
+    dispatch(getArticleList())
   }, [])
 
   const onFinish = values => {
@@ -110,7 +111,7 @@ export default function Article() {
       </Card>
       {/* 表格 */}
       <Card title="根据筛选结果共查询到000条数据" style={{ marginTop: 10 }}>
-        <Table dataSource={dataSource} columns={columns} />;
+        <Table dataSource={dataSource} columns={columns} />
       </Card>
     </div>
   )
