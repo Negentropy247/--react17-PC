@@ -1,63 +1,60 @@
 import React, { useEffect } from 'react'
 import styles from './index.module.scss'
-import { Breadcrumb, Button, Card, DatePicker, Form, Radio, Select, Table } from 'antd'
+import { Breadcrumb, Button, Card, DatePicker, Form, Radio, Select, Table, Tag } from 'antd'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getArticleList, getChannelList } from '@/store/actions/article'
 
-const dataSource = [
-  {
-    key: '1',
-    name: '胡彦斌',
-    age: 32,
-    address: '西湖区湖底公园1号'
-  },
-  {
-    key: '2',
-    name: '胡彦祖',
-    age: 42,
-    address: '西湖区湖底公园1号'
-  }
+const STATUS = [
+  { id: -1, title: '全部', color: 'magenta' },
+  { id: 0, title: '草稿', color: 'red' },
+  { id: 1, title: '待审核', color: 'volcano' },
+  { id: 2, title: '审核通过', color: 'green' },
+  { id: 3, title: '审核失败', color: 'gold' }
 ]
 
 const columns = [
   {
     title: '封面',
-    key: 'name'
+    dataIndex: 'name'
   },
   {
     title: '标题',
-    key: 'age'
+    dataIndex: 'title'
   },
   {
     title: '状态',
-    key: 'address'
+    dataIndex: 'status',
+    render: status => {
+      const obj = STATUS.find(item => item.id === status)
+      return <Tag color={obj.color}>{obj.title}</Tag>
+    }
   },
   {
     title: '时间',
-    key: 'address'
+    dataIndex: 'pubdate'
   },
   {
     title: '阅读数',
-    key: 'address'
+    dataIndex: 'read_count'
   },
   {
     title: '评论数',
-    key: 'address'
+    dataIndex: 'comment_count'
   },
   {
     title: '点赞数',
-    key: 'address'
+    dataIndex: 'like_count'
   },
   {
-    title: '操作',
-    key: 'address'
+    title: '操作'
   }
 ]
 
 export default function Article() {
   const dispatch = useDispatch()
   const channels = useSelector(state => state.article.channels)
+  const articles = useSelector(state => state.article.articles)
   useEffect(() => {
     dispatch(getChannelList())
     dispatch(getArticleList())
@@ -83,11 +80,11 @@ export default function Article() {
         <Form initialValues={{ status: -1 }} onFinish={onFinish}>
           <Form.Item label="状态" name="status">
             <Radio.Group>
-              <Radio value={-1}>全部</Radio>
-              <Radio value={0}>草稿</Radio>
-              <Radio value={1}>待审核</Radio>
-              <Radio value={2}>审核通过</Radio>
-              <Radio value={3}>审核失败</Radio>
+              {STATUS.map(item => (
+                <Radio key={item.id} value={item.id}>
+                  {item.title}
+                </Radio>
+              ))}
             </Radio.Group>
           </Form.Item>
           <Form.Item label="频道" name="channel_id">
@@ -110,8 +107,8 @@ export default function Article() {
         </Form>
       </Card>
       {/* 表格 */}
-      <Card title="根据筛选结果共查询到000条数据" style={{ marginTop: 10 }}>
-        <Table dataSource={dataSource} columns={columns} />
+      <Card title={`根据筛选结果共查询到${articles.total_count}条数据`} style={{ marginTop: 10 }}>
+        <Table dataSource={articles.results} columns={columns} />
       </Card>
     </div>
   )
