@@ -117,7 +117,7 @@ export default function Article() {
       </Card>
       {/* 表格 */}
       <Card title={`根据筛选结果共查询到${articles.total_count}条数据`} style={{ marginTop: 10 }}>
-        <Table dataSource={articles.results} columns={columns} />
+        <Table rowKey="id" dataSource={articles.results} columns={columns} />
       </Card>
     </div>
   )
