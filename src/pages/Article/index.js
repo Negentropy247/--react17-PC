@@ -71,6 +71,16 @@ export default function Article() {
 
   const onFinish = values => {
     console.log(values)
+    const params = {}
+    if (values.status !== -1) {
+      params.status = values.status
+    }
+    params.channels_id = values.channels_id
+    if (values.date) {
+      params.begin_pubdate = values.date[0].startOf('day').format('YYYY-MM-DD HH:mm:ss')
+      params.end_pubdate = values.date[1].endOf('day').format('YYYY-MM-DD HH:mm:ss')
+    }
+    dispatch(getArticleList(params))
   }
 
   return (
