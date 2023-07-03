@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getArticleList, getChannelList } from '@/store/actions/article'
 import img from '@/assets/error.png'
+import article from '@/store/reducers/article'
 
 const STATUS = [
   { id: -1, title: '全部', color: 'magenta' },
@@ -127,7 +128,17 @@ export default function Article() {
       </Card>
       {/* 表格 */}
       <Card title={`根据筛选结果共查询到${articles.total_count}条数据`} style={{ marginTop: 10 }}>
-        <Table rowKey="id" dataSource={articles.results} columns={columns} />
+        <Table
+          pagination={{
+            position: ['bottomCenter'],
+            total: articles.total_count,
+            pageSize: articles.per_page, //每页条数
+            current: articles.page //当前页
+          }}
+          rowKey="id"
+          dataSource={articles.results}
+          columns={columns}
+        />
       </Card>
     </div>
   )
