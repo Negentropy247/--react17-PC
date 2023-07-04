@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styles from './index.module.scss'
 import { Breadcrumb, Button, Card, DatePicker, Form, Image, Radio, Select, Table, Tag } from 'antd'
 import { Link } from 'react-router-dom'
@@ -65,23 +65,25 @@ export default function Article() {
   const dispatch = useDispatch()
   const channels = useSelector(state => state.article.channels)
   const articles = useSelector(state => state.article.articles)
+  const params = useRef({})
   useEffect(() => {
     dispatch(getChannelList())
     dispatch(getArticleList())
   }, [])
 
   const onFinish = values => {
-    console.log(values)
-    const params = {}
     if (values.status !== -1) {
-      params.status = values.status
+      params.current.status = values.status
     }
-    params.channels_id = values.channels_id
+    params.current.channels_id = values.channels_id
     if (values.date) {
-      params.begin_pubdate = values.date[0].startOf('day').format('YYYY-MM-DD HH:mm:ss')
-      params.end_pubdate = values.date[1].endOf('day').format('YYYY-MM-DD HH:mm:ss')
+      params.current.begin_pubdate = values.date[0].startOf('day').format('YYYY-MM-DD HH:mm:ss')
+      params.current.end_pubdate = values.date[1].endOf('day').format('YYYY-MM-DD HH:mm:ss')
     }
-    dispatch(getArticleList(params))
+    // 从第一页开始筛选
+    params.current.page = 1
+    dispatch(getArticleList(params.current))
+    console.log(params.current)
   }
 
   return (
@@ -133,7 +135,14 @@ export default function Article() {
             position: ['bottomCenter'],
             total: articles.total_count,
             pageSize: articles.per_page, //每页条数
-            current: articles.page //当前页
+            current: articles.page, //当前页
+            onChange(page, pageSize) {
+              // page第几页
+              // pageSize每页几条
+              params.current.page = page
+              params.current.per_page = pageSize
+              dispatch(getArticleList(params.current))
+            }
           }}
           rowKey="id"
           dataSource={articles.results}
