@@ -12,8 +12,10 @@ import {
   Select,
   Space,
   Table,
-  Tag
+  Tag,
+  message
 } from 'antd'
+import { EditOutlined, DeletOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { delArticle, getArticleList, getChannelList } from '@/store/actions/article'
@@ -26,78 +28,6 @@ const STATUS = [
   { id: 1, title: '待审核', color: 'volcano' },
   { id: 2, title: '审核通过', color: 'green' },
   { id: 3, title: '审核失败', color: 'gold' }
-]
-
-const del = async id => {
-  await dispatch(delArticle(id))
-  // 重新发送请求
-  dispatch(getArticleList(params.current))
-}
-
-const columns = [
-  {
-    title: '封面',
-    dataIndex: 'cover',
-    render(cover) {
-      // console.log(cover.images)
-      if (cover.type === 0) {
-        return <Image width={200} height={150} src={img}></Image>
-      } else {
-        return <Image width={200} height={150} src={cover.images[0]} fallback={img}></Image>
-      }
-    }
-  },
-  {
-    title: '标题',
-    dataIndex: 'title'
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    render: status => {
-      const obj = STATUS.find(item => item.id === status)
-      return <Tag color={obj.color}>{obj.title}</Tag>
-    }
-  },
-  {
-    title: '时间',
-    dataIndex: 'pubdate'
-  },
-  {
-    title: '阅读数',
-    dataIndex: 'read_count'
-  },
-  {
-    title: '评论数',
-    dataIndex: 'comment_count'
-  },
-  {
-    title: '点赞数',
-    dataIndex: 'like_count'
-  },
-  {
-    title: '操作',
-    dataIndex: 'id',
-    render(id) {
-      return (
-        <Space>
-          <Button shape="circle" type="primary" icon={<EditOutlined></EditOutlined>}></Button>
-          <Popconfirm
-            onClick={() => {
-              delete id
-            }}
-            title="确定删除？"
-            onConfirm={confirm}
-            onCancel={cabcel}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button shape="circle" type="danger" icon={<DeletOutlined></DeletOutlined>}></Button>
-          </Popconfirm>
-        </Space>
-      )
-    }
-  }
 ]
 
 export default function Article() {
@@ -124,6 +54,70 @@ export default function Article() {
     dispatch(getArticleList(params.current))
     console.log(params.current)
   }
+
+  const del = async id => {
+    await dispatch(delArticle(id))
+    // 重新发送请求
+    dispatch(getArticleList(params.current))
+    message.success('删除成功')
+  }
+
+  const columns = [
+    {
+      title: '封面',
+      dataIndex: 'cover',
+      render(cover) {
+        // console.log(cover.images)
+        if (cover.type === 0) {
+          return <Image width={200} height={150} src={img}></Image>
+        } else {
+          return <Image width={200} height={150} src={cover.images[0]} fallback={img}></Image>
+        }
+      }
+    },
+    {
+      title: '标题',
+      dataIndex: 'title'
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      render: status => {
+        const obj = STATUS.find(item => item.id === status)
+        return <Tag color={obj.color}>{obj.title}</Tag>
+      }
+    },
+    {
+      title: '时间',
+      dataIndex: 'pubdate'
+    },
+    {
+      title: '阅读数',
+      dataIndex: 'read_count'
+    },
+    {
+      title: '评论数',
+      dataIndex: 'comment_count'
+    },
+    {
+      title: '点赞数',
+      dataIndex: 'like_count'
+    },
+    {
+      title: '操作',
+      dataIndex: 'id',
+      render(id) {
+        return (
+          <Space>
+            <Button shape="circle" type="primary" icon={<EditOutlined></EditOutlined>}></Button>
+            <Popconfirm onConfirm={() => del(id)} title="确定删除？">
+              <Button shape="circle" type="danger" icon={<DeletOutlined></DeletOutlined>}></Button>
+            </Popconfirm>
+          </Space>
+        )
+      }
+    }
+  ]
 
   return (
     <div className={styles.root}>
