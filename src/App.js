@@ -10,6 +10,7 @@ export default function App() {
   return (
     <Router history={history}>
       <div className="app">
+        {/* 我试一下github */}
         {/* 渲染组件 */}
         <Switch>
           {/* 路由重定向 */}

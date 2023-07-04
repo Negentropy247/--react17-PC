@@ -43,16 +43,21 @@ export default function Article() {
   const onFinish = values => {
     if (values.status !== -1) {
       params.current.status = values.status
+    } else {
+      delete params.current.status
     }
     params.current.channels_id = values.channels_id
     if (values.date) {
       params.current.begin_pubdate = values.date[0].startOf('day').format('YYYY-MM-DD HH:mm:ss')
       params.current.end_pubdate = values.date[1].endOf('day').format('YYYY-MM-DD HH:mm:ss')
+    } else {
+      delete params.current.begin_pubdate
+      delete params.current.end_pubdate
     }
     // 从第一页开始筛选
     params.current.page = 1
     dispatch(getArticleList(params.current))
-    console.log(params.current)
+    // console.log(params.current)
   }
 
   const del = async id => {
