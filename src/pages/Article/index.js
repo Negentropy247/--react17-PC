@@ -15,7 +15,7 @@ import {
   Tag,
   message
 } from 'antd'
-import { EditOutlined, DeletOutlined } from '@ant-design/icons'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { delArticle, getArticleList, getChannelList } from '@/store/actions/article'
@@ -58,7 +58,7 @@ export default function Article() {
   const del = async id => {
     await dispatch(delArticle(id))
     // 重新发送请求
-    dispatch(getArticleList(params.current))
+    await dispatch(getArticleList(params.current))
     message.success('删除成功')
   }
 
@@ -109,9 +109,9 @@ export default function Article() {
       render(id) {
         return (
           <Space>
-            <Button shape="circle" type="primary" icon={<EditOutlined></EditOutlined>}></Button>
+            <Button shape="circle" type="primary" icon={<EditOutlined />}></Button>
             <Popconfirm onConfirm={() => del(id)} title="确定删除？">
-              <Button shape="circle" type="danger" icon={<DeletOutlined></DeletOutlined>}></Button>
+              <Button shape="circle" type="danger" icon={<DeleteOutlined />}></Button>
             </Popconfirm>
           </Space>
         )
