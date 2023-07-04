@@ -21,3 +21,12 @@ export const getArticleList = params => {
     })
   }
 }
+// 删除文章
+export const delArticle = id => {
+  return async () => {
+    await request({
+      method: 'delete',
+      url: `/mp/articles/${id}`
+    })
+  }
+}

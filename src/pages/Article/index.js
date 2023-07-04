@@ -1,9 +1,22 @@
 import React, { useEffect, useRef } from 'react'
 import styles from './index.module.scss'
-import { Breadcrumb, Button, Card, DatePicker, Form, Image, Radio, Select, Table, Tag } from 'antd'
+import {
+  Breadcrumb,
+  Button,
+  Card,
+  DatePicker,
+  Form,
+  Image,
+  Popconfirm,
+  Radio,
+  Select,
+  Space,
+  Table,
+  Tag
+} from 'antd'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getArticleList, getChannelList } from '@/store/actions/article'
+import { delArticle, getArticleList, getChannelList } from '@/store/actions/article'
 import img from '@/assets/error.png'
 import article from '@/store/reducers/article'
 
@@ -14,6 +27,12 @@ const STATUS = [
   { id: 2, title: '审核通过', color: 'green' },
   { id: 3, title: '审核失败', color: 'gold' }
 ]
+
+const del = async id => {
+  await dispatch(delArticle(id))
+  // 重新发送请求
+  dispatch(getArticleList(params.current))
+}
 
 const columns = [
   {
@@ -57,7 +76,27 @@ const columns = [
     dataIndex: 'like_count'
   },
   {
-    title: '操作'
+    title: '操作',
+    dataIndex: 'id',
+    render(id) {
+      return (
+        <Space>
+          <Button shape="circle" type="primary" icon={<EditOutlined></EditOutlined>}></Button>
+          <Popconfirm
+            onClick={() => {
+              delete id
+            }}
+            title="确定删除？"
+            onConfirm={confirm}
+            onCancel={cabcel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button shape="circle" type="danger" icon={<DeletOutlined></DeletOutlined>}></Button>
+          </Popconfirm>
+        </Space>
+      )
+    }
   }
 ]
 
