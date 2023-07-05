@@ -1,16 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Card, Breadcrumb, Form, Input, Select, Button, Space } from 'antd'
 import styles from './index.module.scss'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { getChannelList } from '@/store/actions/article'
+import { useChannels } from '@/hooks'
 
 export default function Publish() {
-  const channels = useSelector(state => state.article.channels)
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getChannelList())
-  }, [])
+  const channels = useChannels()
   return (
     <div className={styles.root}>
       {/* 面包屑 */}
